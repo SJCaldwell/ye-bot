@@ -35,7 +35,7 @@ def create_corpus_for_artist(artist):
     """
     raise NotImplementedError
 
-def load_data(data_dir, seq_length, genre="rap"):
+def load_data(seq_length, genre="rap"):
     data = create_corpus_for_genre(genre)
     chars = list(set(data))
     VOCAB_SIZE = len(chars)
@@ -64,6 +64,18 @@ def load_data(data_dir, seq_length, genre="rap"):
             target_sequence[j][y_sequence_ix[j]] = 1.0
             y[i] = target_sequence
     return X, y, VOCAB_SIZE, ix_to_char
+
+def generate_text(model, length, vocab_size, ix_to_char):
+    # starting with random character
+    ix = [np.random.randint(vocab_size)]
+    y_char = [ix_to_char[ix[-1]]]
+    X = np.zeros((1, length, vocab_size))
+    for i in range(length):
+        X[0, i, :][ix[-1]] = 1
+        print(ix_to_char[ix[-1]], end="")
+        ix = np.argmax(model.predict(X[:, :i+1, :])[0], 1)
+        y_char.append(ix_to_char[ix[-1]])
+    return ('').join(y_char)
 
 if __name__ == "__main__":
     print (create_corpus_for_genre("rap"))
