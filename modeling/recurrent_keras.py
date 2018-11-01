@@ -12,7 +12,7 @@ ap = argparse.ArgumentParser()
 
 ap.add_argument('--genre', default='rap')
 ap.add_argument('--batch_size', type=int, default=50)
-ap.add_argument('--layer_num', type=int, defaut=2)
+ap.add_argument('--layer_num', type=int, default=2)
 ap.add_argument('--seq_length', type=int, default=50)
 ap.add_argument('--hidden_dim', type=int, default=500)
 ap.add_argument('--generate_length', type=int, default=500)
