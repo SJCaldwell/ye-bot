@@ -59,8 +59,8 @@ def load_data(seq_length, genre="rap"):
                 X[i] = input_sequence
         except:
             print(j)
-            print(len(input_sequence) + " is length of input sequence")
-            print(len(X_sequence_ix) + " is X_sequence_ix")
+            print(str(len(input_sequence)) + " is length of input sequence")
+            print(str(len(X_sequence_ix)) + " is X_sequence_ix")
             print(input_sequence)
             print(X_sequence_ix)
         y_sequence = data[i*seq_length+1:(i+1)*seq_length+1]
