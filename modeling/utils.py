@@ -37,7 +37,7 @@ def create_corpus_for_artist(artist):
 
 def load_data(seq_length, genre="rap"):
     data = create_corpus_for_genre(genre)
-    chars = list(set(data))
+    chars = sorted(list(set(data)))
     VOCAB_SIZE = len(chars)
 
     print('Data Length: {} characters'.format(len(data)))

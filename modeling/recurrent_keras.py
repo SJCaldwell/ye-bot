@@ -34,6 +34,8 @@ GENRE = args['genre']
 # Create training data
 X, y, VOCAB_SIZE, ix_to_char = load_data(SEQ_LENGTH, GENRE)
 
+print("TRAINING DATA CREATED")
+
 #Creating network
 model = Sequential()
 model.add(LSTM(HIDDEN_DIM, input_shape = (None, VOCAB_SIZE), return_sequences=True))
