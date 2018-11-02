@@ -53,10 +53,14 @@ def load_data(seq_length, genre="rap"):
         X_sequence = data[i * seq_length: (i+1)*seq_length]
         X_sequence_ix = [char_to_ix[value] for value in X_sequence]
         input_sequence = np.zeros((seq_length, VOCAB_SIZE))
-        for j in range(seq_length):
-            input_sequence[j][X_sequence_ix[j]] = 1.0
-            X[i] = input_sequence
-        
+        try:
+            for j in range(seq_length):
+                input_sequence[j][X_sequence_ix[j]] = 1.0
+                X[i] = input_sequence
+        except:
+            print(j)
+            print(input_sequence)
+            print(X_sequence_ix)
         y_sequence = data[i*seq_length+1:(i+1)*seq_length+1]
         y_sequence_ix = [char_to_ix[value] for value in y_sequence]
         target_sequence = np.zeros((seq_length, VOCAB_SIZE))
