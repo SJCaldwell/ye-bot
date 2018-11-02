@@ -49,10 +49,10 @@ def load_data(seq_length, genre="rap"):
     ix_to_char = {ix:char for ix, char in enumerate(chars)}
     char_to_ix = {char:ix for ix, char in enumerate(chars)}
 
-    X = np.zeros(((len(data)/seq_length), seq_length, VOCAB_SIZE))
-    y = np.zeros(((len(data)/seq_length), seq_length, VOCAB_SIZE))
+    X = np.zeros((round(len(data)/seq_length), seq_length, VOCAB_SIZE))
+    y = np.zeros((round(len(data)/seq_length), seq_length, VOCAB_SIZE))
 
-    for i in range(0, (len(data)/seq_length)):
+    for i in range(0, round(len(data)/seq_length)):
         X_sequence = data[i * seq_length: (i+1)*seq_length]
         X_sequence_ix = [char_to_ix[value] for value in X_sequence]
         input_sequence = np.zeros((seq_length, VOCAB_SIZE))
@@ -65,6 +65,8 @@ def load_data(seq_length, genre="rap"):
         y_sequence_ix = [char_to_ix[value] for value in y_sequence]
         target_sequence = np.zeros((seq_length, VOCAB_SIZE))
 
+        print(str(len(target_sequence)) + " length of target sequence")
+        print(str(len(y_sequence_ix)) + " length of y sequence ix")
 
         for j in range(seq_length):
             target_sequence[j][y_sequence_ix[j]] = 1.
