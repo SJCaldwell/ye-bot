@@ -46,11 +46,12 @@ model.add(Activation('softmax'))
 model.compile(loss="categorical_crossentropy", optimizer="rmsprop")
 
 # Generate some sample before training, which should just be noise
-generate_text(model, args['generate_length'], VOCAB_SIZE, ix_to_char)
+#generate_text(model, args['generate_length'], VOCAB_SIZE, ix_to_char)
 
 if not WEIGHTS == '':
     model.load_weights(WEIGHTS)
-    nb_epoch = int(WEIGHTS[WEIGHTS.rfind('_') + 1:WEIGHTS.find('.')])
+    nb_epoch = 30
+    #nb_epoch = int(WEIGHTS[WEIGHTS.rfind('_') + 1:WEIGHTS.find('.')])
 else:
     nb_epoch = 0
 
