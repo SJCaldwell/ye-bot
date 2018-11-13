@@ -58,7 +58,7 @@ else:
     nb_epoch = 0
 
 # Create TensorBoard
-tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
+tensorboard = TensorBoard(log_dir="../logs/{}".format(time()))
 
 # Training if there is no trained weights
 if args['mode'] == 'train' or WEIGHTS == '':
