@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import requests
 from bs4 import BeautifulSoup
 import os
@@ -49,7 +51,7 @@ def pull_songs_for_artist(artist, genre):
         song_api_path = song_info['result']['api_path']
         filename = title.replace(" ", "").replace("/","").lower()
         artist_folder = artist.replace(" ", "").replace(",","").lower()
-        target_dir = "../data/" + genre + "/" + artist_folder + "/"
+        target_dir = "structure/" + genre + "/" + artist_folder + "/"
         if not os.path.exists(target_dir):
           os.makedirs(target_dir)
         with open(target_dir + filename, 'w') as f:

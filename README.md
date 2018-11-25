@@ -1,14 +1,12 @@
 # ye-bot
 RNN that takes in character level rap lyrics and puts out BARS. 
 
+Follows [Combining Learned Lyrical Structures and Vocabulary for Improved Lyric Generation](https://arxiv.org/pdf/1811.04651.pdf#cite.vaswani17attention)
+
 ## Usage
-Download lyrics to data folder
+First refer to the data/README, and download or supply any data you wish to use.
 
-```bash
-python3 lyric_scraping/lyric_scrape.py
-```
-
-spin up docker container, which automatically mounts this repository
+Then spin up a docker container, which automatically mounts this repository
 
 ```bash
 sudo make bash
