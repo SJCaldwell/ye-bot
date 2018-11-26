@@ -1,7 +1,9 @@
+from keras.callbacks import TensorBoard
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Dropout
 from keras.layers.recurrent import LSTM, SimpleRNN
 from keras.layers.wrappers import TimeDistributed
+from time import time
 import argparse
 from utils import *
 
@@ -55,11 +57,18 @@ if not WEIGHTS == '':
 else:
     nb_epoch = 0
 
+# Create TensorBoard
+tensorboard = TensorBoard(log_dir="../logs/{}".format(time()))
+
 # Training if there is no trained weights
 if args['mode'] == 'train' or WEIGHTS == '':
     while True:
         print('\n\nEpoch: {}\n'.format(nb_epoch))
-        model.fit(X, y, batch_size=BATCH_SIZE, verbose=1, nb_epoch=1)
+        model.fit(X, y,
+                  batch_size=BATCH_SIZE,
+                  verbose=1,
+                  nb_epoch=1,
+                  callbacks=[tensorboard])
         nb_epoch +=1
         generate_text(model, GENERATE_LENGTH, VOCAB_SIZE, ix_to_char)
         if nb_epoch % 10 == 0:
