@@ -12,17 +12,18 @@ CUDNN_VERSION?=7
 TEST=tests/
 SRC=$(shell pwd)
 
-build:
-	docker build -t keras --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) -f $(DOCKER_FILE) .
+build_tf:
+	docker pull tensorflow/tensorflow:latest-gpu
 
-bash: build
-	$(DOCKER) run -it -v $(SRC):/src/workspace -v $(DATA):/data --env KERAS_BACKEND=$(BACKEND) keras bash
+build_t2t:
+	docker build -t tensor2tensor --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) -f $(DOCKER_FILE) .
 
-ipython: build
-	$(DOCKER) run -it -v $(SRC):/src/workspace -v $(DATA):/data --env KERAS_BACKEND=$(BACKEND) keras ipython
+tf: build_tf
+	$(DOCKER) run -it --rm -p 8888:8888 -v $(SRC):/workspace tensorflow/tensorflow:latest-gpu 
+#"jupyter notebook --port=8888 --ip=0.0.0.0"
 
-notebook: build
-	$(DOCKER) run -it -v $(SRC):/src/workspace -v $(DATA):/data --net=host --env KERAS_BACKEND=$(BACKEND) keras
+t2t: build_t2t
+	$(DOCKER) run -it --rm -v $(SRC):/workspace tensor2tensor bash
 
-test: build
-	$(DOCKER) run -it -v $(SRC):/src/workspace -v $(DATA):/data --env KERAS_BACKEND=$(BACKEND) keras py.test $(TEST)
+notebook:
+	$(DOCKER) run -it --rm -v $(SRC):/workspace -v $(DATA):/data --net=host --env KERAS_BACKEND=$(BACKEND) 
