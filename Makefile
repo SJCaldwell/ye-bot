@@ -3,7 +3,8 @@ help:
 
 DATA?="data"
 GPU?=0
-DOCKER_FILE=docker/Dockerfile
+T2T_DOCKER_FILE=docker/t2t_dockerfile
+CONTEXT=docker
 DOCKER=GPU=$(GPU) nvidia-docker
 BACKEND=tensorflow
 PYTHON_VERSION?=3.6
@@ -16,13 +17,13 @@ build_tf:
 	docker pull tensorflow/tensorflow:latest-gpu
 
 build_t2t:
-	docker build -t tensor2tensor --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) -f $(DOCKER_FILE) .
+	docker build -t tensor2tensor -f $(T2T_DOCKER_FILE) $(CONTEXT)
 
 tf: build_tf
 	$(DOCKER) run -it --rm -p 8889:8888 -v $(SRC):/notebooks/workspace tensorflow/tensorflow:latest-gpu
 
 t2t: build_t2t
-	$(DOCKER) run -it --rm -v $(SRC):/notebooks/workspace tensor2tensor bash
+	$(DOCKER) run -it --rm -p 8889:8888 -v $(SRC):/notebooks/workspace tensor2tensor
 
 # Specify that no actual files are created from these make commands 
 .PHONY: build_tf tf build_t2t t2t

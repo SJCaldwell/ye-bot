@@ -1,0 +1,10 @@
+FROM tensorflow/tensorflow:latest-gpu
+
+# Install system packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      vim && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install tensor2tensor
+RUN pip install --upgrade pip && \
+    pip install tensor2tensor
