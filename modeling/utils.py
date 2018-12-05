@@ -3,7 +3,7 @@ import codecs
 import os
 import numpy as np
 
-DATA_DIR = "../data/"
+DATA_DIR = "data/structure"
 
 def create_corpus_for_genre(genre):
     """Create a corpus based off of lyrics in a whole genre.
