@@ -19,11 +19,10 @@ build_t2t:
 	docker build -t tensor2tensor --build-arg python_version=$(PYTHON_VERSION) --build-arg cuda_version=$(CUDA_VERSION) --build-arg cudnn_version=$(CUDNN_VERSION) -f $(DOCKER_FILE) .
 
 tf: build_tf
-	$(DOCKER) run -it --rm -p 8888:8888 -v $(SRC):/workspace tensorflow/tensorflow:latest-gpu 
-#"jupyter notebook --port=8888 --ip=0.0.0.0"
+	$(DOCKER) run -it --rm -p 8889:8888 -v $(SRC):/notebooks/workspace tensorflow/tensorflow:latest-gpu
 
 t2t: build_t2t
-	$(DOCKER) run -it --rm -v $(SRC):/workspace tensor2tensor bash
+	$(DOCKER) run -it --rm -v $(SRC):/notebooks/workspace tensor2tensor bash
 
-notebook:
-	$(DOCKER) run -it --rm -v $(SRC):/workspace -v $(DATA):/data --net=host --env KERAS_BACKEND=$(BACKEND) 
+# Specify that no actual files are created from these make commands 
+.PHONY: build_tf tf build_t2t t2t
